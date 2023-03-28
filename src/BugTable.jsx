@@ -3,22 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 export default function BugTracker(props) {
-  // const bugsList = [
-  //   {
-  //     description: "Like button not working.",
-  //     developer: "Magdalene",
-  //     severity: "Critical ⚠️",
-  //     key: Math.random(),
-  //   },
-  //   {
-  //     description: "Fix bug in line 43.",
-  //     developer: "Cain",
-  //     severity: "Moderate",
-  //     key: Math.random(),
-  //   },
-  // ];
-
-  // const [newBug, setNewBug] = useState(bugsList);
 
   return (
     <div className='max-w-4xl mx-auto mt-20 bg-gray-50 shadow-lg rounded-lg p-3'>
@@ -28,7 +12,9 @@ export default function BugTracker(props) {
           <p>{bug.developer}</p>
           <p>{bug.severity}</p>
           <div className='justify-self-end'>
-            <FontAwesomeIcon className='text-red-700 bg-red-300 text-lg p-2 rounded-lg' icon={faTrashCan} />
+            <button onClick={() => props.onDeleteBug(bug.id)}>
+              <FontAwesomeIcon className='text-red-700 bg-red-300 text-lg p-2 rounded-lg' icon={faTrashCan} />
+            </button>
             <FontAwesomeIcon className='ml-2 text-lg bg-slate-300 p-2 rounded-lg' icon={faPenToSquare} />
           </div>
         </div>

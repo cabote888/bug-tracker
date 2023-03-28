@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import BugForm from "./BugForm";
 import BugTable from "./BugTable";
+import NavBar from "./Navbar";
 
 function App() {
 
@@ -10,11 +11,13 @@ function App() {
       description: "Like button not working.",
       developer: "Magdalene",
       severity: "Critical ⚠️",
+      id: Math.random(),
     },
     {
       description: "Fix bug in line 43.",
       developer: "Cain",
       severity: "Moderate",
+      id: Math.random(),
     },
   ];
 
@@ -26,10 +29,16 @@ function App() {
     });
   }
 
+  function handleDelete(bugId) {
+    const filteredBugs = bugs.filter((bug) => bug.id !== bugId);
+    setBugs(filteredBugs)
+  }
+
   return (
     <div className="App">
-      <BugForm onAddNewBug={newBugHandler}/>
-      <BugTable bugs={bugs} />
+      <NavBar/>
+      <BugForm onAddNewBug={newBugHandler} />
+      <BugTable bugs={bugs} onDeleteBug={handleDelete} />
     </div>
   )
 }
