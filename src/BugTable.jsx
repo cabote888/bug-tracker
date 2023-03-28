@@ -1,11 +1,10 @@
-// import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 export default function BugTracker(props) {
 
   return (
-    <div className='max-w-4xl mx-auto mt-20 bg-gray-50 shadow-lg rounded-lg p-3'>
+    <div className="mt-20 bg-gray-50 shadow-lg rounded-lg p-3">
       {props.bugs.map((bug) => (
         <div key={Math.random()} className="py-2 font-medium text-sm grid grid-cols-4 justify-items-center items-center border-b border-gray-200 border-solid">
           <p className='justify-self-start'>{bug.description}</p>

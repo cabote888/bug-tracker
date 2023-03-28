@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import BugForm from "./BugForm";
 import BugTable from "./BugTable";
-import NavBar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 function App() {
 
@@ -36,7 +36,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar/>
+      <Sidebar/>
       <BugForm onAddNewBug={newBugHandler} />
       <BugTable bugs={bugs} onDeleteBug={handleDelete} />
     </div>

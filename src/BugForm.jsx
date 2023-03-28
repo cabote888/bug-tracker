@@ -36,7 +36,7 @@ export default function BugForm(props) {
     <form
       action=""
       onSubmit={submitHandler}
-      className="flex justify-between items-center max-w-4xl mx-auto mt-10"
+      className="flex justify-between items-center"
     >
       <div className="flex-col flex gap-5">
         <label htmlFor="">Description</label>
