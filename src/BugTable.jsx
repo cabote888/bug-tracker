@@ -1,23 +1,64 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import BugForm from "./BugForm";
+import { useState, useEffect } from "react";
+import Header from "./Header";
+import WrapperHeader from "./WrapperHeader";
+import BugItem from "./BugItem";
 
-export default function BugTracker(props) {
+export default function BugTable(props) {
 
+
+  const [bugs, setBugs] = useState(() => {
+    const localData = localStorage.getItem("bugs");
+    return localData ? JSON.parse(localData) : props.bugsArray;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("bugs", JSON.stringify(bugs));
+  }, [bugs]);
+
+  function newBugHandler(bug) {
+    setBugs((prevBug) => {
+      return [bug, ...prevBug];
+    });
+  }
+  function handleDelete(bugId) {
+    setBugs((prevBugs) => {
+      return prevBugs.filter((bug) => bug.id !== bugId);
+    });
+  }
+
+  // console.log(props.membersArray)
   return (
-    <div className="mt-20 bg-gray-50 shadow-lg rounded-lg p-3">
-      {props.bugs.map((bug) => (
-        <div key={Math.random()} className="py-2 font-medium text-sm grid grid-cols-4 justify-items-center items-center border-b border-gray-200 border-solid">
-          <p className='justify-self-start'>{bug.description}</p>
-          <p>{bug.developer}</p>
-          <p>{bug.severity}</p>
-          <div className='justify-self-end'>
-            <button onClick={() => props.onDeleteBug(bug.id)}>
-              <FontAwesomeIcon className='text-red-700 bg-red-300 text-lg p-2 rounded-lg' icon={faTrashCan} />
-            </button>
-            <FontAwesomeIcon className='ml-2 text-lg bg-slate-300 p-2 rounded-lg' icon={faPenToSquare} />
-          </div>
+    <div>
+      <WrapperHeader>
+        <h1 className="text-2xl font-brandon-bold text-dark-blue">
+          Bug manager
+        </h1>
+        <Header>
+          The "Add New Bug" tool in Codekeeper Bug Tracker simplifies issue
+          reporting by allowing users to easily add a new bug to their list with
+          crucial characteristics such as severity, description, and assignee.
+          This improves bug tracking and allows teams to resolve issues more
+          quickly, resulting in high-quality software.
+        </Header>
+      </WrapperHeader>
+      <BugForm onAddNewBug={newBugHandler} teamMembers={props.membersArray} />
+      <div className="mt-10 bg-white shadow-lg rounded-lg p-3">
+        <div className="grid grid-cols-4 border-b text-gray-400 border-gray-200 py-2 text-xs">
+          <p>ISSUE</p>
+          <p className="place-self-center">ASSIGNEE</p>
+          <p className="place-self-center">SEVERITY</p>
         </div>
-      ))}
+        {bugs.map((bug) => (
+          <BugItem
+            description={bug.description}
+            developer={bug.developer}
+            severity={bug.severity}
+            key={Math.random()}
+            onDeleteBug={() => handleDelete(bug.id)}
+          />
+        ))}
+      </div>
     </div>
   );
 }

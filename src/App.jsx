@@ -1,16 +1,17 @@
-import { useState } from "react";
-import "./App.css";
-import BugForm from "./BugForm";
-import BugTable from "./BugTable";
+import { Route, Routes } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Dashboard from "./Dashboard";
 import Sidebar from "./Sidebar";
+import ManageTeam from "./ManageTeam";
+import BugTable from "./BugTable";
+import Profile from "./Profile";
 
 function App() {
-
   const bugsList = [
     {
       description: "Like button not working.",
       developer: "Magdalene",
-      severity: "Critical ⚠️",
+      severity: "Critical",
       id: Math.random(),
     },
     {
@@ -21,26 +22,36 @@ function App() {
     },
   ];
 
-  const [bugs, setBugs] = useState(bugsList);
+  const [teamMembers, setTeamMembers] = useState(() => {
+    const localNames = localStorage.getItem("teamMembers");
+    return localNames ? JSON.parse(localNames) : [];
+  });
 
-  function newBugHandler(bug) {
-    setBugs((prevBug) => {
-      return [bug, ...prevBug];
-    });
+  function membersList(members) {
+    setTeamMembers(members);
   }
 
-  function handleDelete(bugId) {
-    const filteredBugs = bugs.filter((bug) => bug.id !== bugId);
-    setBugs(filteredBugs)
-  }
+  useEffect(() => {
+    localStorage.setItem("teamMembers", JSON.stringify(teamMembers));
+  }, [teamMembers]);
 
   return (
-    <div className="App">
-      <Sidebar/>
-      <BugForm onAddNewBug={newBugHandler} />
-      <BugTable bugs={bugs} onDeleteBug={handleDelete} />
-    </div>
-  )
+    <>
+      <Sidebar />
+      <Routes className="">
+        <Route path="/" element={<Dashboard />} />
+        <Route
+          path="/bugTable"
+          element={<BugTable bugsArray={bugsList} membersArray={teamMembers} />}
+        />
+        <Route
+          path="/manageTeam"
+          element={<ManageTeam newMembers={membersList}/>}
+        />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </>
+  );
 }
 
-export default App
+export default App;
