@@ -13,6 +13,7 @@ module.exports = {
       },
       colors: {
         "dark-blue": "#353935",
+        "offWhite": "#FAF9F6",
       },
       fontFamily: {
         brandon: "brandon",

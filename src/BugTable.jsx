@@ -27,7 +27,6 @@ export default function BugTable(props) {
     });
   }
 
-  // console.log(props.membersArray)
   return (
     <div>
       <WrapperHeader>
@@ -43,8 +42,8 @@ export default function BugTable(props) {
         </Header>
       </WrapperHeader>
       <BugForm onAddNewBug={newBugHandler} teamMembers={props.membersArray} />
-      <div className="mt-10 bg-white shadow-lg rounded-lg p-3">
-        <div className="grid grid-cols-4 border-b text-gray-400 border-gray-200 py-2 text-xs">
+      <div className="mt-10 bg-white shadow-lg rounded-lg">
+        <div className="grid grid-cols-4 bg-blue-100 text-gray-400 rounded-t-lg p-3 text-xs">
           <p>ISSUE</p>
           <p className="place-self-center">ASSIGNEE</p>
           <p className="place-self-center">SEVERITY</p>

@@ -5,26 +5,30 @@ import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 
 export default function TeamMember(props) {
   return (
-    <div className="flex flex-col items-center shadow-lg rounded-lg ring-1 ring-teal-200 pb-5 w-48 gap-3">
-      <div className="w-full bg-cyan-500 rounded-t-lg py-5">
+    <div className="grid grid-cols-3 py-4 border-b border-gray-200 px-3 rounded-lg">
+      <div className="flex gap-5">
         <img
-          className="w-20 h-20 rounded-full ring-2 ring-emerald-200 mx-auto"
+          className="w-12 h-12 rounded-full ring-2 ring-emerald-200"
           src={profilePic}
           alt="profile"
         />
+        <div>
+          <p className="font-brandon self-center font-bold">
+            {props.name} Carvajal
+          </p>
+          <p className="text-sm text-gray-500">fulanito123@hotmail.com</p>
+        </div>
       </div>
-      <p className="font-brandon font-bold">
-        {props.name}, {props.age}
-      </p>
-      <p className="text-gray-500">{props.role}</p>
-      <div className="mt-3">
+
+      <p className="text-gray-500 self-center text-center">{props.role}</p>
+      <div className="text-right self-center">
         <FontAwesomeIcon
-          className=" bg-blue-400 cursor-pointer hover:bg-blue-500 transition text-white p-2 rounded-full"
+          className=" bg-blue-400 cursor-pointer hover:bg-blue-500 transition text-white p-2 rounded-xl"
           icon={faPenToSquare}
         />
         <button onClick={props.onDeleteMember}>
           <FontAwesomeIcon
-            className="text-white ml-3 cursor-pointer bg-red-600  p-2 hover:bg-red-500 transition rounded-full"
+            className="text-white ml-3 cursor-pointer bg-red-600 p-2 hover:bg-red-500 transition rounded-xl"
             icon={faTrashCan}
           />
         </button>

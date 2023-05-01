@@ -27,7 +27,7 @@ export default function ManageTeam(props) {
     });
   }
 
-  props.newMembers(team)
+  props.newMembers(team);
   return (
     <div>
       <WrapperHeader>
@@ -46,7 +46,11 @@ export default function ManageTeam(props) {
         onNewMember={newMemberHandler}
         // onNewMemberName={newMemberNameHandler}
       />
-      <div className="flex flex-wrap gap-10 mt-14">
+      <div className="mt-14 bg-white shadow-lg rounded-lg">
+        <div className="grid grid-cols-3 bg-blue-100 text-gray-400 rounded-t-lg p-3 text-xs">
+          <p>MEMBER</p>
+          <p className="place-self-center">ROLE</p>
+        </div>
         {team.map((member) => (
           <TeamMember
             name={member.name}
