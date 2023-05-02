@@ -1,12 +1,10 @@
 import BugForm from "./BugForm";
 import { useState, useEffect } from "react";
-import Header from "./Header";
-import WrapperHeader from "./WrapperHeader";
+import Header from "../Header/Header";
+import WrapperHeader from "../Header/WrapperHeader";
 import BugItem from "./BugItem";
 
 export default function BugTable(props) {
-
-
   const [bugs, setBugs] = useState(() => {
     const localData = localStorage.getItem("bugs");
     return localData ? JSON.parse(localData) : props.bugsArray;

@@ -2,31 +2,37 @@ import { useState } from "react";
 
 export default function TeamForm(props) {
   const [enteredName, setEnteredName] = useState("");
-  const [enteredAge, setEnteredAge] = useState("");
-  const [enteredRole, setEnteredRole] = useState("");
+  const [enteredMail, setEnteredMail] = useState("");
+  const [enteredPosition, setEnteredPosition] = useState("");
+
+  const todaysDate = new Date();
+  console.log(todaysDate);
+  const date = `${todaysDate.getDay()}/${todaysDate.getMonth()}/${todaysDate.getFullYear()}`;
+  console.log(date);
 
   function handleNameChange(e) {
     setEnteredName(e.target.value);
   }
 
-  function handleAgeChange(e) {
-    setEnteredAge(e.target.value);
+  function handleMailChange(e) {
+    setEnteredMail(e.target.value);
   }
 
-  function handleRoleChange(e) {
-    setEnteredRole(e.target.value);
+  function handlePositionChange(e) {
+    setEnteredPosition(e.target.value);
   }
 
   function submitMember(e) {
     e.preventDefault();
     const enteredMember = {
       name: enteredName,
-      age: enteredAge,
-      role: enteredRole,
+      mail: enteredMail,
+      position: enteredPosition,
+      date: date,
     };
     setEnteredName("");
-    setEnteredAge("");
-    setEnteredRole("");
+    setEnteredMail("");
+    setEnteredPosition("");
     props.onNewMember(enteredMember);
   }
 
@@ -42,19 +48,19 @@ export default function TeamForm(props) {
       />
       <input
         required
-        value={enteredAge}
-        onChange={handleAgeChange}
+        value={enteredMail}
+        onChange={handleMailChange}
         type="text"
-        placeholder="Age"
+        placeholder="E-Mail"
         className="rounded-lg text-sm bg-gray-100 text-slate-500 placeholder-slate-500 focus:ring-sky-200 focus:ring-2 border-none"
       />
       <input
         required
-        value={enteredRole}
-        onChange={handleRoleChange}
+        value={enteredPosition}
+        onChange={handlePositionChange}
         type="text"
         className="border-none bg-gray-100 text-slate-500 focus:ring-sky-200 focus:ring-2 text-sm rounded-lg"
-        placeholder="Role"
+        placeholder="Position"
       />
       <button className="rounded-lg  self-center bg-blue-600 focus:ring-4 focus:ring-sky-200 focus:outline-none hover:bg-blue-500 transition text-white text-sm font-medium p-2">
         Add Member

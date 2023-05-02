@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Dashboard from "./Dashboard";
-import Sidebar from "./Sidebar";
-import ManageTeam from "./ManageTeam";
-import BugTable from "./BugTable";
-import Profile from "./Profile";
+import Dashboard from "./components/Dashboard/Dashboard";
+import Sidebar from "./components/Sidebar/Sidebar";
+import ManageTeam from "./components/Team/ManageTeam";
+import BugTable from "./components/Bugs/BugTable";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   const bugsList = [
@@ -46,7 +46,7 @@ function App() {
         />
         <Route
           path="/manageTeam"
-          element={<ManageTeam newMembers={membersList}/>}
+          element={<ManageTeam newMembers={membersList} />}
         />
         <Route path="/profile" element={<Profile />} />
       </Routes>

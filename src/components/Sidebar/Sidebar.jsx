@@ -87,22 +87,22 @@ export default function Sidebar() {
             </SidebarItem>
             <SidebarItem to={"/profile"}>
               <FontAwesomeIcon className="self-center" icon={faUser} />
-              <p className={`${textClass}`}>Profile</p>
+              <p className={textClass}>Profile</p>
             </SidebarItem>
             <SidebarItem to={"/manageTeam"}>
               <FontAwesomeIcon icon={faCode} />
-              <p className={`cursor-pointer ${textClass} `}>Team</p>
+              <p className={textClass}>Team</p>
             </SidebarItem>
             <SidebarItem to={"/404error"}>
               <FontAwesomeIcon
                 className="self-center"
                 icon={faArrowRightFromBracket}
               />
-              <p className={`cursor-pointer ${textClass}`}>Log out</p>
+              <p className={textClass}>Log out</p>
             </SidebarItem>
             <li className="flex items-center gap-2 mt-auto mb-2 bg-blue-400 rounded-lg border border-solid border-1 border-white py-2 px-1.5">
               <FontAwesomeIcon icon={faFaceSmile} size="xl" />
-              <div className={` -ml-1`}>
+              <div className="-ml-1">
                 <p className="text-sm font-medium -mb-1">Welcome, Admin</p>
                 <p className="text-xs font-light">adminuser@gmail.com</p>
               </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import WrapperHeader from "./WrapperHeader";
-import Header from "./Header";
+import WrapperHeader from "../Header/WrapperHeader";
+import Header from "../Header/Header";
 import TeamMember from "./TeamMember";
 import TeamForm from "./TeamForm";
 import { v4 as uuidv4 } from "uuid";
@@ -10,6 +10,7 @@ export default function ManageTeam(props) {
     const teamData = localStorage.getItem("team");
     return teamData ? JSON.parse(teamData) : [];
   });
+  console.log(team);
 
   useEffect(() => {
     localStorage.setItem("team", JSON.stringify(team));
@@ -42,20 +43,19 @@ export default function ManageTeam(props) {
           achieve your shared goals.
         </Header>
       </WrapperHeader>
-      <TeamForm
-        onNewMember={newMemberHandler}
-        // onNewMemberName={newMemberNameHandler}
-      />
+      <TeamForm onNewMember={newMemberHandler} />
       <div className="mt-14 bg-white shadow-lg rounded-lg">
-        <div className="grid grid-cols-3 bg-blue-100 text-gray-400 rounded-t-lg p-3 text-xs">
+        <div className="grid grid-cols-4 bg-blue-100 text-gray-400 rounded-t-lg p-3 text-xs">
           <p>MEMBER</p>
-          <p className="place-self-center">ROLE</p>
+          <p className="place-self-center">POSITION</p>
+          <p className="self-center text-center">DATE ADDED</p>
         </div>
         {team.map((member) => (
           <TeamMember
             name={member.name}
-            age={member.age}
-            role={member.role}
+            mail={member.mail}
+            position={member.position}
+            date={member.date}
             key={member.id}
             onDeleteMember={() => deleteMemberHandler(member.id)}
           />
