@@ -10,7 +10,6 @@ export default function ManageTeam(props) {
     const teamData = localStorage.getItem("team");
     return teamData ? JSON.parse(teamData) : [];
   });
-  console.log(team);
 
   useEffect(() => {
     localStorage.setItem("team", JSON.stringify(team));
@@ -27,7 +26,6 @@ export default function ManageTeam(props) {
       return prevTeam.filter((member) => member.id !== id);
     });
   }
-
   props.newMembers(team);
   return (
     <div>

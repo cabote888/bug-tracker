@@ -6,9 +6,9 @@ export default function TeamForm(props) {
   const [enteredPosition, setEnteredPosition] = useState("");
 
   const todaysDate = new Date();
-  console.log(todaysDate);
+  // console.log(todaysDate);
   const date = `${todaysDate.getDay()}/${todaysDate.getMonth()}/${todaysDate.getFullYear()}`;
-  console.log(date);
+  // console.log(date);
 
   function handleNameChange(e) {
     setEnteredName(e.target.value);

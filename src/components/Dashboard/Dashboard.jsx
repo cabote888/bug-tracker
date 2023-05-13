@@ -1,16 +1,19 @@
-export default function Dashboard() {
-  const veggies = ["Ocumo", "Batata", "Yuca"];
+import Chart from "chart.js/auto";
+import { Line } from "react-chartjs-2";
 
-  return (
-    <form>
-      <select>
-        <option value="cock">Choose veggie</option>
-        {veggies.map((veggie) => (
-          <option key={Math.random()} value={veggie}>
-            {veggie}
-          </option>
-        ))}
-      </select>
-    </form>
-  );
+const labels = ["lun", "mar", "mier", "jue", "vie", "sab", "dom"];
+
+const data = {
+  labels: labels,
+  datasets: [
+    {
+      label: "Sex Projection For This Week",
+      data: [5, 19, 45, 65, 79, 140, 200],
+    },
+  ],
+};
+export default function Dashboard() {
+  return <div>
+    <Line data={data} />
+  </div>;
 }

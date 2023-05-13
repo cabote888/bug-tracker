@@ -39,7 +39,7 @@ function App() {
     <>
       <Sidebar />
       <Routes className="">
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<Dashboard severityArray={severity} />} />
         <Route
           path="/bugTable"
           element={<BugTable bugsArray={bugsList} membersArray={teamMembers} />}
