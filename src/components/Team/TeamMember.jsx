@@ -26,7 +26,7 @@ export default function TeamMember(props) {
           className=" bg-blue-400 cursor-pointer hover:bg-blue-500 transition text-white p-2 rounded-xl"
           icon={faPenToSquare}
         />
-        <button onClick={props.onDeleteMember}>
+        <button onClick={() => props.onDeleteMember(props.id)}>
           <FontAwesomeIcon
             className="text-white ml-3 cursor-pointer bg-red-600 p-2 hover:bg-red-500 transition rounded-xl"
             icon={faTrashCan}

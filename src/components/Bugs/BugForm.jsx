@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuid } from "uuid";
 
 export default function BugForm(props) {
   const [enteredDesc, setEnteredDesc] = useState("");
@@ -31,7 +32,6 @@ export default function BugForm(props) {
     setEnteredSeverity("");
     props.onAddNewBug(enteredBugs);
   }
-
   return (
     <div>
       <form action="" onSubmit={submitHandler} className="flex flex-wrap mt-16 gap-3">
@@ -55,9 +55,7 @@ export default function BugForm(props) {
             <option value="" disabled hidden>
               Choose developer
             </option>
-          {props.teamMembers.map(member => (
-            <option value={member.name} key={Math.random()}>{member.name}</option>
-          ))}
+            {props.members.map((member) => <option key={member.id}>{member.name}</option>)}
           </select>
         </div>
         <div className="flex items-center gap-1">

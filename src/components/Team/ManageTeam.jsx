@@ -1,34 +1,13 @@
-import { useState, useEffect } from "react";
 import WrapperHeader from "../Header/WrapperHeader";
 import Header from "../Header/Header";
 import TeamMember from "./TeamMember";
 import TeamForm from "./TeamForm";
-import { v4 as uuidv4 } from "uuid";
 
 export default function ManageTeam(props) {
-  const [team, setTeam] = useState(() => {
-    const teamData = localStorage.getItem("team");
-    return teamData ? JSON.parse(teamData) : [];
-  });
-  console.log(team);
-
-  useEffect(() => {
-    localStorage.setItem("team", JSON.stringify(team));
-  }, [team]);
-
-  function newMemberHandler(member) {
-    setTeam((prevMember) => {
-      return [{ ...member, id: uuidv4() }, ...prevMember];
-    });
+  function onAddNewMemberHandler(enteredMember) {
+    props.onAddNewMember(enteredMember);
   }
 
-  function deleteMemberHandler(id) {
-    setTeam((prevTeam) => {
-      return prevTeam.filter((member) => member.id !== id);
-    });
-  }
-
-  props.newMembers(team);
   return (
     <div>
       <WrapperHeader>
@@ -43,21 +22,22 @@ export default function ManageTeam(props) {
           achieve your shared goals.
         </Header>
       </WrapperHeader>
-      <TeamForm onNewMember={newMemberHandler} />
+      <TeamForm onAddNewMember={onAddNewMemberHandler} />
       <div className="mt-14 bg-white shadow-lg rounded-lg">
         <div className="grid grid-cols-4 bg-blue-100 text-gray-400 rounded-t-lg p-3 text-xs">
           <p>MEMBER</p>
           <p className="place-self-center">POSITION</p>
           <p className="self-center text-center">DATE ADDED</p>
         </div>
-        {team.map((member) => (
+        {props.members.map((member) => (
           <TeamMember
             name={member.name}
             mail={member.mail}
             position={member.position}
             date={member.date}
             key={member.id}
-            onDeleteMember={() => deleteMemberHandler(member.id)}
+            id={member.id}
+            onDeleteMember={props.onDeleteMember}
           />
         ))}
       </div>

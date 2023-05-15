@@ -1,16 +1,19 @@
-export default function Dashboard() {
-  const veggies = ["Ocumo", "Batata", "Yuca"];
+import BarChart from "./Charts/BarChart";
 
+export default function Dashboard(props) {
   return (
-    <form>
-      <select>
-        <option value="cock">Choose veggie</option>
-        {veggies.map((veggie) => (
-          <option key={Math.random()} value={veggie}>
-            {veggie}
-          </option>
-        ))}
-      </select>
-    </form>
+    <div>
+      <div className="flex justify-center gap-10 text-center mb-10">
+        <div>
+          <p>Total Tickets</p>
+          <div>{props.bugs.length}</div>
+        </div>
+        <div>
+          <p>Team Members</p>
+          <div>{props.members.length}</div>
+        </div>
+      </div>
+      <BarChart bugs={props.bugs} />
+    </div>
   );
 }

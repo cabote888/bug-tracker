@@ -1,30 +1,12 @@
 import BugForm from "./BugForm";
-import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import WrapperHeader from "../Header/WrapperHeader";
 import BugItem from "./BugItem";
 
 export default function BugTable(props) {
-  const [bugs, setBugs] = useState(() => {
-    const localData = localStorage.getItem("bugs");
-    return localData ? JSON.parse(localData) : props.bugsArray;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("bugs", JSON.stringify(bugs));
-  }, [bugs]);
-
-  function newBugHandler(bug) {
-    setBugs((prevBug) => {
-      return [bug, ...prevBug];
-    });
+  function handleAddNewBug(enteredBugs) {
+    props.onAddNewBug(enteredBugs);
   }
-  function handleDelete(bugId) {
-    setBugs((prevBugs) => {
-      return prevBugs.filter((bug) => bug.id !== bugId);
-    });
-  }
-
   return (
     <div>
       <WrapperHeader>
@@ -39,20 +21,21 @@ export default function BugTable(props) {
           quickly, resulting in high-quality software.
         </Header>
       </WrapperHeader>
-      <BugForm onAddNewBug={newBugHandler} teamMembers={props.membersArray} />
+      <BugForm onAddNewBug={handleAddNewBug} bugs={props.bugs} members={props.members} />
       <div className="mt-10 bg-white shadow-lg rounded-lg">
         <div className="grid grid-cols-4 bg-blue-100 text-gray-400 rounded-t-lg p-3 text-xs">
           <p>ISSUE</p>
           <p className="place-self-center">ASSIGNEE</p>
           <p className="place-self-center">SEVERITY</p>
         </div>
-        {bugs.map((bug) => (
+        {props.bugs.map((bug) => (
           <BugItem
             description={bug.description}
             developer={bug.developer}
             severity={bug.severity}
-            key={Math.random()}
-            onDeleteBug={() => handleDelete(bug.id)}
+            key={bug.id}
+            id={bug.id}
+            onDeleteBug={props.onDeleteBug}
           />
         ))}
       </div>

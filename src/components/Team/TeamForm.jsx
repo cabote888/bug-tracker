@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuid } from "uuid";
 
 export default function TeamForm(props) {
   const [enteredName, setEnteredName] = useState("");
@@ -6,9 +7,7 @@ export default function TeamForm(props) {
   const [enteredPosition, setEnteredPosition] = useState("");
 
   const todaysDate = new Date();
-  console.log(todaysDate);
   const date = `${todaysDate.getDay()}/${todaysDate.getMonth()}/${todaysDate.getFullYear()}`;
-  console.log(date);
 
   function handleNameChange(e) {
     setEnteredName(e.target.value);
@@ -29,11 +28,12 @@ export default function TeamForm(props) {
       mail: enteredMail,
       position: enteredPosition,
       date: date,
+      id: uuid(),
     };
     setEnteredName("");
     setEnteredMail("");
     setEnteredPosition("");
-    props.onNewMember(enteredMember);
+    props.onAddNewMember(enteredMember);
   }
 
   return (

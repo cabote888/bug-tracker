@@ -13,7 +13,7 @@ export default function BugItem(props) {
           className="text-md bg-blue-400 cursor-pointer hover:bg-blue-500 transition text-white p-2 rounded-xl"
           icon={faCheck}
         />
-        <button onClick={props.onDeleteBug}>
+        <button onClick={() => props.onDeleteBug(props.id)}>
           <FontAwesomeIcon
             className="text-white ml-3 bg-red-600 text-md p-2 hover:bg-red-500 transition rounded-xl"
             icon={faTrashCan}
