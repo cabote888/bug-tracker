@@ -2,7 +2,7 @@ import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 
 export default function BarChart(props) {
-  const labels = ["Minimal", "Moderate", "Critical"];
+  const labels = ["Sex 2.0", "Portfolio Project", "GTA VI"];
 
   const filteredSeverity = props.bugs.map((bug) => bug.severity);
 
@@ -17,29 +17,47 @@ export default function BarChart(props) {
   );
 
   const data = {
-    labels: labels,
+    labels,
     datasets: [
       {
-        label: "Issues ordered by severity",
-        data: [
-          filterMinimal.length,
-          filterModerate.length,
-          filterCritical.length,
-        ],
-        backgroundColor: [
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(255, 205, 86, 0.2)",
-          "rgba(255, 99, 132, 0.2)",
-        ],
-        borderColor: [
-          "rgb(75, 192, 192)",
-          "rgb(255, 205, 86)",
-          "rgb(255, 99, 132)",
-        ],
-        borderWidth: 1,
-        barThickness: 100,
+        label: "Minimal",
+        data: [filterMinimal.length, 9, 15],
+        backgroundColor: "rgba(75, 192, 192, 0.6)",
+      },
+      {
+        label: "Moderate",
+        data: [5, filterModerate.length, 9],
+        backgroundColor: "rgba(255, 205, 86, 0.6)",
+      },
+      {
+        label: "Critical",
+        data: [2, filterCritical.length, 5],
+        backgroundColor: "rgba(255, 99, 132, 0.6)",
       },
     ],
+    barThickness: 100,
   };
-  return <Bar data={data} />;
+
+  const options = {
+    plugins: {
+      legend: {
+        title: {
+          display: true,
+          text: "Number of issues by severity",
+          font: {
+            size: 14,
+            family: "Rubik, sans-serif",
+          },
+        },
+        align: "center",
+        labels: {
+          boxWidth: 15,
+          useBorderRadius: true,
+          borderRadius: 5,
+        },
+      },
+    },
+    maintainAspectRatio: false,
+  };
+  return <Bar options={options} data={data} />;
 }
