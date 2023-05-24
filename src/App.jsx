@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Sidebar from "./components/Sidebar/Sidebar";
+import Projects from "./components/Projects/Projects";
 import ManageTeam from "./components/Team/ManageTeam";
 import BugTable from "./components/Bugs/BugTable";
 import Profile from "./components/Profile/Profile";
@@ -27,7 +28,7 @@ function App() {
       ]
     );
   });
-
+  
   const [teamMembers, setTeamMembers] = useState(() => {
     const localNames = localStorage.getItem("teamMembers");
     return localNames ? JSON.parse(localNames) : [];
@@ -66,6 +67,7 @@ function App() {
           path="/"
           element={<Dashboard bugs={bugs} members={teamMembers} />}
         />
+        <Route path="/projects" element={<Projects />}></Route>
         <Route
           path="/bugTable"
           element={

@@ -1,6 +1,10 @@
 import SidebarItem from "./SidebarItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFaceSmile, faUser } from "@fortawesome/free-regular-svg-icons";
+import {
+  faFaceSmile,
+  faFolderOpen,
+  faUser,
+} from "@fortawesome/free-regular-svg-icons";
 import {
   faTableColumns,
   faList,
@@ -80,6 +84,10 @@ export default function Sidebar() {
             <SidebarItem className to={"/"}>
               <FontAwesomeIcon className="self-center" icon={faTableColumns} />
               <p className={textClass}>Dashboard</p>
+            </SidebarItem>
+            <SidebarItem to={"/projects"}>
+              <FontAwesomeIcon className="self-center" icon={faFolderOpen} />
+              <p className={textClass}> Projects</p>
             </SidebarItem>
             <SidebarItem to={"/bugTable"}>
               <FontAwesomeIcon className="self-center" icon={faList} />
