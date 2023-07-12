@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import WrapperHeader from "../Header/WrapperHeader";
 
 export default function Dashboard(props) {
+  const filteredNameProjects = props.projects.map((project) => project.name);
   return (
     <div>
       <WrapperHeader>
@@ -22,7 +23,7 @@ export default function Dashboard(props) {
 
       <div className="flex flex-wrap gap-5 h-80 mt-5">
         <div className="border-2 w-3/5 border-blue-200 p-3 rounded-lg shadow-lg">
-          <BarChart bugs={props.bugs} />
+          <BarChart bugs={props.bugs} projects={props.projects} projectNames={filteredNameProjects}/>
         </div>
         <div className="border-2 border-blue-200 p-3 rounded-lg shadow-lg">
           <DoughnutChart bugs={props.bugs} />

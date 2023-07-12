@@ -2,36 +2,45 @@ import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 
 export default function BarChart(props) {
-  const labels = ["Sex 2.0", "Portfolio Project", "GTA VI"];
+  const projectNames = props.projects.map((project) => project.name);
 
-  const filteredSeverity = props.bugs.map((bug) => bug.severity);
+  const bugCountsByProjectAndSeverity = props.bugs.reduce((acc, bug) => {
+    const {project, severity} = bug;
+    if (!acc[project]) {
+      acc[project] = {
+        Minimal: 0,
+        Moderate: 0,
+        Critical: 0,
+      };
+    }
+    acc[project][severity] += 1;
+    return acc;
+  }, {});
 
-  const filterMinimal = filteredSeverity.filter(
-    (severity) => severity === "Minimal"
-  );
-  const filterModerate = filteredSeverity.filter(
-    (severity) => severity === "Moderate"
-  );
-  const filterCritical = filteredSeverity.filter(
-    (severity) => severity === "Critical"
-  );
-
+  const bugCounts = projectNames.map((projectName) => {
+    const bugCountBySeverity = bugCountsByProjectAndSeverity[projectName];
+    return [
+      bugCountBySeverity?.Minimal || 0,
+      bugCountBySeverity?.Moderate || 0,
+      bugCountBySeverity?.Critical || 0,
+    ]
+  })
   const data = {
-    labels,
+    labels: projectNames,
     datasets: [
       {
         label: "Minimal",
-        data: [filterMinimal.length, 9, 15],
+        data: bugCounts.map((counts) => counts[0]),
         backgroundColor: "rgba(75, 192, 192, 0.6)",
       },
       {
         label: "Moderate",
-        data: [5, filterModerate.length, 9],
+        data: bugCounts.map((counts) => counts[1]),
         backgroundColor: "rgba(255, 205, 86, 0.6)",
       },
       {
         label: "Critical",
-        data: [2, filterCritical.length, 5],
+        data: bugCounts.map((counts) => counts[2]),
         backgroundColor: "rgba(255, 99, 132, 0.6)",
       },
     ],
@@ -59,5 +68,6 @@ export default function BarChart(props) {
     },
     maintainAspectRatio: false,
   };
+
   return <Bar options={options} data={data} />;
 }

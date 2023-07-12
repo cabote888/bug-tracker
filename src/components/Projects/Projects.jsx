@@ -1,17 +1,21 @@
 import ProjectsForm from "./ProjectsForm";
-import ProjectItem from "./ProjetcItem";
+import ProjectItem from "./ProjectItem";
 import WrapperHeader from "../Header/WrapperHeader";
 import Header from "../Header/Header";
-import { useState } from "react";
-import { v4 as uuid } from "uuid";
 
-export default function Projects() {
-  const [projects, setProjects] = useState([]);
-
-  function newProject(project) {
-    setProjects((prevProject) => [project, ...prevProject]);
+export default function Projects(props) {
+  function handleAddProject(enteredProject) {
+    props.onNewProject(enteredProject);
+    props.onAddProjectLabel(enteredProject.name)
   }
 
+  function handleDeleteProject(id) {
+    props.onDeleteProject(id)
+    const deletedProject = props.projects.find((project) => project.id === id);
+    if (deletedProject) {
+      props.onDeleteProjectLabel(deletedProject.name);
+    }
+  }
   return (
     <div>
       <WrapperHeader>
@@ -24,17 +28,20 @@ export default function Projects() {
           high-quality software with ease.
         </Header>
       </WrapperHeader>
-      <ProjectsForm onAddNewProject={newProject} />
+      <ProjectsForm onAddNewProject={handleAddProject} projects={props.projects} members={props.members} />
       <div className="grid grid-cols-3 gap-5 mt-10">
-      {projects.map((project) => (
-        <ProjectItem
-          name={project.name}
-          description={project.description}
-          color={project.color}
-          date={project.date}
-          key={uuid()}
-        />
-      ))}
+        {props.projects.map((project) => (
+          <ProjectItem
+            onDeleteProject={props.onDeleteProject}
+            name={project.name}
+            description={project.description}
+            color={project.color.value}
+            date={project.date}
+            team={project.members}
+            id={project.id}
+            key={project.id}
+          />
+        ))}
       </div>
     </div>
   );

@@ -19,7 +19,10 @@ export default function Sidebar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const sidebarRef = useRef(null);
 
-  function toggleBar() {
+  const buttonRef = useRef(null);
+
+  function toggleBar(event) {
+    event.stopPropagation();
     setShowSidebar(!showSidebar);
   }
 
@@ -28,6 +31,7 @@ export default function Sidebar() {
       if (
         sidebarRef.current &&
         !sidebarRef.current.contains(event.target) &&
+        !buttonRef.current.contains(event.target) &&
         !event.target.closest(
           ".text-white.fixed.font-bold.z-50.w-10.h-10.active\\:bg-blue-400.transition-all.bg-blue-500.right-5.sm\\:hidden.rounded-full"
         )
@@ -58,8 +62,9 @@ export default function Sidebar() {
   return (
     <div className="relative">
       <button
-        className="text-white fixed font-bold z-50 w-10 h-10 active:bg-blue-400 transition-all bg-blue-500 right-5 sm:hidden rounded-full"
-        onClick={toggleBar}
+        ref={buttonRef}
+        className="text-white fixed font-bold z-50 w-10 h-10 active:bg-blue-400 transition-all bg-blue-500 right-5 md:hidden rounded-full"
+        onClick={(event) => toggleBar(event)}
       >
         <FontAwesomeIcon icon={faBars} />
       </button>
@@ -67,7 +72,7 @@ export default function Sidebar() {
         ref={sidebarRef}
         className={`${
           showSidebar ? "w-56" : "transform w-56 -translate-x-full"
-        } fixed top-0 left-0 transition-all duration-500 z-50 md:transform md:translate-x-0 md:w-56 border-8 border-offWhite bg-blue-500 h-full rounded-2xl`}
+        } fixed top-0 left-0 transition-all duration-500 z-50 md:transform md:translate-x-0 md:w-56 border-8 border-lightGrayBlue bg-blue-500 h-full rounded-2xl`}
       >
         <nav onClick={() => setShowSidebar(false)} className="h-full">
           <ul className="flex flex-col gap-5 px-5 p-3 text-white h-full">

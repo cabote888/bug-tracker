@@ -12,20 +12,17 @@ export default function ManageTeam(props) {
     <div>
       <WrapperHeader>
         <h1 className="text-2xl font-brandon-bold text-dark-blue">
-          Manage team
+          Members & Teams
         </h1>
         <Header>
-          "Manage Team" is a feature on our website that enables you to
-          efficiently manage your team members. With this tool, you can add,
-          edit or remove team members, assign roles and permissions, and track
-          progress. It streamlines communication and collaboration, helping you
-          achieve your shared goals.
+          With this tool, you can add, edit or remove team members, assign roles
+          and permissions, and track progress.
         </Header>
       </WrapperHeader>
-      <TeamForm onAddNewMember={onAddNewMemberHandler} />
-      <div className="mt-14 bg-white shadow-lg rounded-lg">
-        <div className="grid grid-cols-4 bg-blue-100 text-gray-400 rounded-t-lg p-3 text-xs">
-          <p>MEMBER</p>
+      <TeamForm members={props.members} onAddNewMember={onAddNewMemberHandler} />
+      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:block justify-items-center gap-y-12 mt-14">
+        <div className="hidden md:grid md:grid-cols-5 bg-blue-500 text-white rounded-t-lg p-3 text-xs font-medium">
+          <p className="col-span-2">MEMBER</p>
           <p className="place-self-center">POSITION</p>
           <p className="self-center text-center">DATE ADDED</p>
         </div>

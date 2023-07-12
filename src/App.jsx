@@ -28,7 +28,26 @@ function App() {
       ]
     );
   });
-  
+
+  const [projects, setProjects] = useState(() => {
+    const localProjects = localStorage.getItem("projects");
+    return localProjects ? JSON.parse(localProjects) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("projects", JSON.stringify(projects));
+  }, [projects]);
+
+  function newProject(project) {
+    setProjects((prevProject) => [project, ...prevProject]);
+  }
+
+  function deleteProject(id) {
+    setProjects((prevProject) =>
+      prevProject.filter((project) => project.id !== id)
+    );
+  }
+
   const [teamMembers, setTeamMembers] = useState(() => {
     const localNames = localStorage.getItem("teamMembers");
     return localNames ? JSON.parse(localNames) : [];
@@ -59,21 +78,44 @@ function App() {
     setBugs((prevBugs) => prevBugs.filter((bug) => bug.id !== id));
   }
 
-  return (
+  const [projectLabels, setProjectLabels] = useState([]);
+
+  function addProjectLabel(label) {
+    setProjectLabels((prevLabels) => [...prevLabels, label]);
+  }
+
+  function deleteProjectLabel(label) {
+    setProjectLabels((prevLabels) => 
+    prevLabels.filter((projLabel) => projLabel !== label));
+  }
+   return (
     <>
       <Sidebar />
       <Routes className="">
         <Route
           path="/"
-          element={<Dashboard bugs={bugs} members={teamMembers} />}
+          element={<Dashboard projects={projects} bugs={bugs} members={teamMembers} />}
         />
-        <Route path="/projects" element={<Projects />}></Route>
+        <Route
+          path="/projects"
+          element={
+            <Projects
+              members={teamMembers}
+              projects={projects}
+              onDeleteProject={deleteProject}
+              onNewProject={newProject}
+              onAddProjectLabel={addProjectLabel}
+              onDeleteProjectLabel={deleteProjectLabel}
+            />
+          }
+        ></Route>
         <Route
           path="/bugTable"
           element={
             <BugTable
               members={teamMembers}
               bugs={bugs}
+              projects={projects}
               onAddNewBug={addNewBug}
               onDeleteBug={deleteBug}
             />

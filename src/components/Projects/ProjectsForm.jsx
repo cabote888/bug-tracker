@@ -1,24 +1,42 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
+import SelectMulti from "../SelectComponent/SelectMulti";
+import SelectSimple from "../SelectComponent/SelectSimple";
+import Modal from "../Modal/Modal.jsx";
+import FormItem from "../Form/FormItem.jsx";
+import InputItem from "../Form/InputItem";
 
 export default function ProjectsForm(props) {
   const todaysDate = new Date();
-  const date = `${todaysDate.getDay()}/${todaysDate.getMonth()}/${todaysDate.getFullYear()}`;
+  const date = `${todaysDate.getDate()}/${
+    todaysDate.getMonth() + 1
+  }/${todaysDate.getFullYear()}`;
 
   const colors = [
-    { name: "Blue", colorValue: "blue-600" },
-    { name: "Red", colorValue: "red-600" },
-    { name: "Orange", colorValue: "orange-600" },
-    { name: "Green", colorValue: "green-600" },
-    { name: "Lime", colorValue: "lime-600" },
-    { name: "Yellow", colorValue: "yellow-600" },
-    { name: "Violet", colorValue: "violet-600" },
-    { name: "Brown", colorValue: "orange-900" },
+    { label: "Blue", value: "blue-600", id: uuid() },
+    { label: "Red", value: "red-600", id: uuid() },
+    { label: "Orange", value: "orange-600", id: uuid() },
+    { label: "Green", value: "green-600", id: uuid() },
+    { label: "Lime", value: "lime-600", id: uuid() },
+    { label: "Yellow", value: "yellow-600", id: uuid() },
+    { label: "Violet", value: "violet-600", id: uuid() },
+    { label: "Brown", value: "orange-900", id: uuid() },
   ];
 
   const [enteredName, setEnteredName] = useState("");
   const [enteredDescription, setEnteredDescription] = useState("");
-  const [enteredColor, setEnteredColor] = useState();
+  const [enteredColor, setEnteredColor] = useState([]);
+  const [selectedMembers, setSelectedMembers] = useState([]);
+  const [resetCounter, setResetCounter] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
+
+  function handleSelectMembersChange(members) {
+    setSelectedMembers(members);
+  }
+
+  function handleSelectChange(option) {
+    setEnteredColor(option);
+  }
 
   function handleNameChange(e) {
     setEnteredName(e.target.value);
@@ -28,8 +46,13 @@ export default function ProjectsForm(props) {
     setEnteredDescription(e.target.value);
   }
 
-  function handleColorChange(e) {
-    setEnteredColor(e.target.value);
+  function handleOpenModal() {
+    setOpenModal(true);
+  }
+
+  function handleCloseModal(e) {
+    e.preventDefault();
+    setOpenModal(false);
   }
 
   function submitHandler(e) {
@@ -39,58 +62,67 @@ export default function ProjectsForm(props) {
       description: enteredDescription,
       color: enteredColor,
       date: date,
+      members: selectedMembers,
+      id: uuid(),
     };
     setEnteredName("");
     setEnteredDescription("");
     setEnteredColor("");
+    setOpenModal(false);
     props.onAddNewProject(enteredProject);
+    setResetCounter((prevResetCounter) => prevResetCounter + 1);
   }
   return (
     <div>
-      <form
-        onSubmit={submitHandler}
-        action=""
-        className="flex flex-wrap mt-16 gap-3"
-      >
-        <div className="flex items-center gap-1">
-          <input
+      <div className="flex gap-x-5 mt-5">
+        <div
+          onClick={handleOpenModal}
+          className="md:w-44 bg-blue-500 hover:bg-blue-600 transition cursor-pointer rounded-lg text-white text-xl font-light flex items-center justify-center"
+        >
+          <p className="px-5">+ Add Project</p>
+        </div>
+        <div className="flex flex-col md:w-36 justify-between bg-white rounded-lg py-2 px-4">
+          <p>Total projects</p>
+          <p className="text-6xl text-slate-800">{props.projects.length}</p>
+        </div>
+      </div>
+      <Modal open={openModal} close={handleCloseModal}>
+        <FormItem onSubmit={submitHandler}>
+          <InputItem
             onChange={handleNameChange}
             value={enteredName}
-            required
-            className="rounded-lg text-sm bg-gray-100  placeholder-slate-500 focus:ring-sky-200 focus:ring-2 border-none"
             type="text"
-            placeholder="Name"
+            placeholder={"Name"}
           />
-        </div>
-        <div className="flex items-center gap-1">
-          <input
+          <InputItem
             onChange={handleDescriptionChange}
             value={enteredDescription}
-            type="text"
-            placeholder="Short description"
-            required
-            className="rounded-lg border-none text-slate-500 text-sm bg-gray-100 focus:ring-sky-200 focus:ring-2"
-          ></input>
-        </div>
-        <div className="flex items-center gap-1">
-          <select
-            onChange={handleColorChange}
-            value={enteredColor}
-            required
-            className="border-none bg-gray-100 text-slate-500 focus:ring-sky-200 focus:ring-2 text-sm rounded-lg"
-          >
-            <option value="" disabled hidden>
-              Color
-            </option>
-            {colors.map((color) => (
-              <option key={uuid()} value={color.colorValue}>{color.name}</option>
-            ))}
-          </select>
-        </div>
-        <button className="rounded-lg self-center bg-blue-600 focus:ring-4 focus:ring-sky-200 focus:outline-none hover:bg-blue-500 transition text-white text-sm font-medium p-2">
-          Add Project
-        </button>
-      </form>
+            placeholder={"Short description"}
+          />
+          <SelectMulti
+            members={props.members}
+            onSelectedMembers={handleSelectMembersChange}
+            counter={resetCounter}
+          />
+          <SelectSimple
+            options={colors}
+            onSelectedOption={handleSelectChange}
+            placeholder={"Select color"}
+            counter={resetCounter}
+          />
+          <div className="grid grid-cols-2 gap-x-5">
+            <button className="rounded-lg w-full bg-blue-600 focus:ring-4 focus:ring-sky-200 focus:outline-none hover:bg-blue-500 transition text-white text-sm font-medium p-2">
+              Add Project
+            </button>
+            <button
+              onClick={handleCloseModal}
+              className="md:block rounded-lg self-center bg-red-600 focus:ring-4 focus:ring-sky-200 focus:outline-none hover:bg-red-500 transition text-white text-sm font-medium p-2"
+            >
+              Cancel
+            </button>
+          </div>
+        </FormItem>
+      </Modal>
     </div>
   );
 }
